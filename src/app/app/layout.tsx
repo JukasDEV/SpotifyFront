@@ -23,7 +23,7 @@ export default function RootLayout({
             <UserProvider>
               <div className="flex items-start justify-content w-full">
                 <Sidebar2 />
-                <main className="relative">
+                <main className="relative w-full">
                   {children}
                 </main>
               </div>
