@@ -3,33 +3,28 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
-import { signIn } from 'next-auth/react'
 import { toast } from "@/components/ui/use-toast"
 import axios from 'axios'
 import Cookies from "cookies-js"
 import Link from "next/link"
 
-
-
 export default function RegisterForm() {
     const form = useForm()
     
     const handleSubmit = form.handleSubmit(async (data) => {
-        
         console.log(data)
-        if(data.password == data.confirm_password || data.phone.length > 11){
+        if(data.password === data.confirm_password){
             try {
                 await axios.post('/api/auth/register', {
                     email: data.email,
                     password: data.password,
-                    name: data.name,
-                    phone: data.phone
+                    name: data.name
                 }).then(async (response) => {
                     console.log("Response: ", response)
-                    Cookies.set('token', response.data.token, {expires: 84600/2})
-                    Cookies.set('user', JSON.stringify(data), {expires: 84600/2})
-                    Cookies.set('plan', response.data.plan, {expires: 84600/2})
-                    Cookies.set('userid', response.data.userid, {expires: 84600/2})
+                    Cookies.set('token', response.data.token, {expires: 84600 / 2})
+                    Cookies.set('user', JSON.stringify(data), {expires: 84600 / 2})
+                    Cookies.set('plan', response.data.plan, {expires: 84600 / 2})
+                    Cookies.set('userid', response.data.userid, {expires: 84600 / 2})
                     toast({
                         title: 'Registrado com Sucesso!',
                         description: 'Aproveite o Jobeiros!',
@@ -57,13 +52,6 @@ export default function RegisterForm() {
                     duration: 5000,
                 })
             }
-        } else if(data.phone.length < 11) {
-            toast({
-                variant: "destructive",
-                title: 'Celular inválido',
-                description: 'Digite um celular válido',
-                duration: 5000,
-            })
         } else {
             toast({
                 variant: "destructive",
@@ -73,8 +61,6 @@ export default function RegisterForm() {
             })
         }
     })
-
-    
 
     return (
         <div className="w-full lg:grid lg:grid-cols-2 lg:min-h-[600px] xl:min-h-[800px] h-screen flex items-center justify-center">
@@ -95,10 +81,6 @@ export default function RegisterForm() {
                             <Input id="email" placeholder="m@example.com" required type="email" {...form.register('email')} />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="phone">Celular</Label>
-                            <Input mask="(99) 99999-9999" id="phone" placeholder="(99) 99999-9999" required type="phone" {...form.register('phone')} />
-                        </div>
-                        <div className="space-y-2">
                             <Label htmlFor="password">Senha</Label>
                             <Input id="password" placeholder="********" required type="password" {...form.register('password')} />
                         </div>
@@ -114,7 +96,6 @@ export default function RegisterForm() {
                                 Já tenho conta
                             </Link>
                         </div>
-                        
                     </form>
                 </div>
             </div>
@@ -126,10 +107,8 @@ export default function RegisterForm() {
                 style={{
                     aspectRatio: "1280/960",
                     objectFit: "contain",
-
                 }}
             />
-            
         </div>
     )
 }

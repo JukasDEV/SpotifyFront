@@ -35,20 +35,9 @@ export default function Page() {
     }, [])
 
     return (
-      <DashboardPage>
-        <DashboardPageHeader>
-          <DashboardPageHeaderTitle>
+
             <span className='flex items-center gap text-[12px]'>
-              TheoFy
             </span>
-            </DashboardPageHeaderTitle>
-          <DashboardPageHeaderNav>
-            <></>
-          </DashboardPageHeaderNav>
-        </DashboardPageHeader>
-        <DashboardPageMain>
-          <></>
-        </DashboardPageMain>
-      </DashboardPage>
+
     )
   }

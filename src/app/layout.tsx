@@ -11,8 +11,8 @@ import Script from "next/script";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Jobeiros",
-  description: "Alavanque sua carreira e garanta seu emprego com Jobeiros",
+  title: "SpotDeezer",
+  description: "SpotDeezer a melhor do momento",
 };
 
 export default function RootLayout({

@@ -6,9 +6,9 @@ export const getApiDocs = async () => {
       definition: {
         openapi: '3.0.0',
         info: {
-          title: 'CV SaaS Doc API',
+          title: 'API DOC SPOTDEEZER',
           version: '1.0',
-          description: 'Uma solução completa para gerenciamento e otimização de currículos e Entrevistas.', 
+          description: 'A MELHOR PLATAFORMA DE MÚSICA BRASILEIRA.', 
         },
         components: {
           securitySchemes: {

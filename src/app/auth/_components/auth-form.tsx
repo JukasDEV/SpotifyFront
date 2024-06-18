@@ -3,7 +3,6 @@ import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useForm } from "react-hook-form"
-import { signIn } from 'next-auth/react'
 import { toast } from "@/components/ui/use-toast"
 import axios from 'axios'
 import Cookies from "cookies-js"
@@ -12,29 +11,24 @@ import { ModalForgotPassword } from "./modal-forgot-password"
 import { useState } from "react"
 import { Icon } from "@iconify/react"
 
-
-
 export default function AuthForm() {
     const form = useForm()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     
     const handleSubmit = form.handleSubmit(async (data) => {
         setIsLoading(true)
-        
-        
 
         try {
             await axios.post('/api/auth/login', {
                 email: data.email,
                 password: data.password,
             }).then((response) => {
-                Cookies.set('token', response.data.token, {expires: 84600/2})
-                Cookies.set('user', JSON.stringify(response.data.user), {expires: 84600/2})
-                Cookies.set('plan', response.data.plan, {expires: 84600/2})
-                Cookies.set('userid', response.data.userid, {expires: 84600/2})
+                Cookies.set('token', response.data.token, {expires: 84600 / 2})
+                Cookies.set('user', JSON.stringify(response.data.user), {expires: 84600 / 2})
+                Cookies.set('plan', response.data.user.planId, {expires: 84600 / 2})
                 toast({
                     title: 'Sucesso!',
-                    description: 'Aproveite o Jobeiros!',
+                    description: 'Aproveite o SpotDeezer!',
                     duration: 5000,
                 })
                 setIsLoading(false)
@@ -59,15 +53,13 @@ export default function AuthForm() {
         }
     })
 
-    
-
     return (
         <div className="w-full lg:grid lg:grid-cols-2 lg:min-h-[600px] xl:min-h-[800px] h-screen flex items-center justify-center">
             <div className="flex items-center justify-center py-12 lg:py-0">
                 <div className="mx-auto w-[350px] space-y-6">
                     <div className="space-y-2 text-center">
                         <h1 className="text-3xl font-bold">Entrar</h1>
-                        <p className="text-gray-500 dark:text-gray-400">Preencha suas credenciais para acessar o TheoFy.</p>
+                        <p className="text-gray-500 dark:text-gray-400">Preencha Seu Login para Usar o SpotDeezer.</p>
                     </div>
 
                     <form className="space-y-4" onSubmit={handleSubmit}>
@@ -107,10 +99,8 @@ export default function AuthForm() {
                 style={{
                     aspectRatio: "1920/1080",
                     objectFit: "contain",
-
                 }}
             />
-            
         </div>
     )
 }

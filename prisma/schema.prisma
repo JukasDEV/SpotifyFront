@@ -3,15 +3,75 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_URL")
+  provider = "sqlserver"
+  url      = env("DATABASE_URL")
 }
 
-model users {
-  id                Int       @id @default(autoincrement())
-  email             String    @unique @db.VarChar(255)
-  password          String    @db.VarChar(500)
-  phone             String    @db.VarChar(15)
-  name              String    @db.VarChar(50)
+model Albums {
+  AlbumId     Int       @id(map: "PK__Albums__97B4BE37E416BFB5") @default(autoincrement())
+  AlbumName   String    @db.NVarChar(100)
+  ReleaseDate DateTime? @db.Date
+  ArtistId    Int?
+  BandId      Int?
+  CreatedAt   DateTime? @default(now(), map: "DF__Albums__CreatedA__6A30C649") @db.DateTime
+  Artists     Artists?  @relation(fields: [ArtistId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Albums__ArtistId__6B24EA82")
+  Bands       Bands?    @relation(fields: [BandId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Albums__BandId__6C190EBB")
+  Songs       Songs[]
 }
 
+model Artists {
+  Id         Int       @id(map: "PK__Artists__3214EC079C4C1277") @default(autoincrement())
+  ArtistName String    @db.NVarChar(100)
+  Bio        String?   @db.NVarChar(Max)
+  CreatedAt  DateTime? @default(now(), map: "DF__Artists__Created__60A75C0F") @db.DateTime
+  Albums     Albums[]
+  Songs      Songs[]
+}
+
+model Bands {
+  Id        Int       @id(map: "PK__Bands__3214EC070966152B") @default(autoincrement())
+  BandName  String    @db.NVarChar(100)
+  Bio       String?   @db.NVarChar(Max)
+  CreatedAt DateTime? @default(now(), map: "DF__Bands__CreatedAt__6383C8BA") @db.DateTime
+  Albums    Albums[]
+  Songs     Songs[]
+}
+
+model Playlists {
+  Id           Int       @id(map: "PK__Playlist__3214EC07F5777671") @default(autoincrement())
+  PlaylistName String    @db.NVarChar(100)
+  UserId       Int?
+  CreatedAt    DateTime? @default(now(), map: "DF__Playlists__Creat__01142BA1") @db.DateTime
+  Image        String?   @db.VarChar(500)
+  description  String?   @db.VarChar(500)
+}
+
+model Songs {
+  Id        Int       @id(map: "PK__Songs__3214EC0764AEB516") @default(autoincrement())
+  SongName  String    @db.NVarChar(100)
+  Duration  Int
+  AlbumId   Int?
+  ArtistId  Int?
+  BandId    Int?
+  CreatedAt DateTime? @default(now(), map: "DF__Songs__CreatedAt__7B5B524B") @db.DateTime
+  Albums    Albums?   @relation(fields: [AlbumId], references: [AlbumId], onDelete: NoAction, onUpdate: NoAction, map: "FK__Songs__AlbumId__7C4F7684")
+  Artists   Artists?  @relation(fields: [ArtistId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Songs__ArtistId__7D439ABD")
+  Bands     Bands?    @relation(fields: [BandId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Songs__BandId__7E37BEF6")
+}
+
+model Users {
+  Id        Int       @id(map: "PK__Users__3214EC07AFB1EDF4") @default(autoincrement())
+  Name      String    @db.NVarChar(100)
+  Email     String    @unique(map: "UQ__Users__A9D10534D61DF2D5") @db.NVarChar(255)
+  Password  String    @db.NVarChar(255)
+  CreatedAt DateTime? @default(now(), map: "DF__Users__CreatedAt__5DCAEF64") @db.DateTime
+  planId    Int?
+  Plans     Plans?    @relation(fields: [planId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_Users_Plans")
+}
+
+model Plans {
+  id         Int       @id(map: "PK__Plans__3213E83FE2B9FED8") @default(autoincrement())
+  name       String    @db.VarChar(255)
+  created_at DateTime? @default(now(), map: "DF__Plans__created_a__03F0984C") @db.DateTime
+  Users      Users[]
+}
