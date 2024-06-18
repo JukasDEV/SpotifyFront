@@ -59,6 +59,8 @@ export default function Component() {
           <div className="grid gap-8">
             <div className="grid gap-4">
               <h2 className="text-2xl font-bold">Playlists</h2>
+              {playlists.length > 0 ? (
+
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {playlists.map((playlist) => (
                   <div key={playlist.Id} className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
@@ -77,9 +79,15 @@ export default function Component() {
                       <p className="text-sm text-gray-500 dark:text-gray-400">{playlist.description}</p>
                     </div>
                   </div>
-                ))}
-              </div>
-            </div>
+                    ))}
+                    </div>
+                  ) : (
+                    <div className="text-center p-4">
+                      <p>Nenhuma playlist encontrada para o usuário. <a href="#" className="text-blue-500 hover:underline">Crie uma playlist para exibir aqui.</a></p>
+                    </div>
+                  )}
+                </div>
+                 
             <div className="grid gap-4">
               <h2 className="text-2xl font-bold">Songs</h2>
               <div className="border rounded-lg overflow-hidden">
