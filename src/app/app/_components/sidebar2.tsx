@@ -63,10 +63,10 @@ export default function Sidebar2() {
           <span className="text-2xl font-bold">SpotDeezer</span>
         </div>
         <nav className="flex flex-col gap-1 px-4">
-          <Link href="#" className="flex items-center gap-3 py-2 px-3 rounded hover:bg-[#282828]" prefetch={false}>
-            <HomeIcon className="w-6 h-6" />
-            <span>Início</span>
-          </Link>
+        <Link href="/app/inicio" className="flex items-center gap-3 py-2 px-3 rounded hover:bg-[#282828]" prefetch={false}>
+      <HomeIcon className="w-6 h-6" />
+      <span>Início</span>
+    </Link>
           <Link href="#" className="flex items-center gap-3 py-2 px-3 rounded hover:bg-[#282828]" prefetch={false}>
             <LibraryIcon className="w-6 h-6" />
             <span>Sua Biblioteca</span>
