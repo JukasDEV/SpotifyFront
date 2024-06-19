@@ -37,9 +37,13 @@ export default function Component() {
           ) : (
             alien && (
               <img
+
+              //@ts-ignore
                 src={alien[0].imagem}
                 width="550"
                 height="550"
+                              //@ts-ignore
+
                 alt={alien[0].nome_alien}
                 className="mx-auto aspect-video overflow-hidden rounded-xl object-bottom sm:w-full lg:order-last lg:aspect-square"
               />
