@@ -4,8 +4,9 @@ generator client {
 
 datasource db {
   provider = "sqlserver"
-  url      = env("DATABASE_URL")
+  url      = "sqlserver://spotifyjoao.database.windows.net:1433;database=spotifyjoao;user=joaologin;password=Senha@123;encrypt=true;trustServerCertificate=true;hostNameInCertificate=*.database.windows.net;"
 }
+
 
 model Albums {
   AlbumId     Int       @id(map: "PK__Albums__97B4BE37E416BFB5") @default(autoincrement())

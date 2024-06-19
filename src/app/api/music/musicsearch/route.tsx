@@ -5,7 +5,7 @@ import { SearchClient, AzureKeyCredential } from "@azure/search-documents";
 const searchClient = new SearchClient(
   "https://joaospotfy-search.search.windows.net", 
   "azuresql-index-2",                                
-  new AzureKeyCredential('process.env.NEXT_PUBLIC_AZURE_SEARCH_API_KEY')
+  new AzureKeyCredential("ZHJ0sRV1DQzmUnF2apdj0xEDK3yQ48gxsMrgCxKzHdAzSeCP1TtP")
 );
 
 export async function POST(req: NextRequest) {

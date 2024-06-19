@@ -76,7 +76,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             }, { status: 401 });
         }
 
-        const token = jwt.sign({ userId: user.Id }, 'process.env.JWT_SECRET', { expiresIn: '12h' });
+        const token = jwt.sign({ userId: user.Id }, 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c', { expiresIn: '12h' });
 
         // Autenticação bem-sucedida, retornando o token
         return NextResponse.json({
