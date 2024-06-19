@@ -12,11 +12,13 @@ import { LoadingBolinha } from "@/components/app/loading-bolinha";
 
 
 export default function Component() {
-  const [playlists, setPlaylists] = useState<any[]>([]);
+  const [playlists, setPlaylists] = useState<any[] | null >(null);
 
   const [open, setOpen] = useState(false);
 const [playlistName, setPlaylistName] = useState('');
 const [playlistDesc, setPlaylistDesc] = useState('');
+const [isLoading, setIsLoading] = useState(true);
+
 
 // Função para abrir o modal
 const openModal = () => {
@@ -32,6 +34,7 @@ const openModal = () => {
       } catch (error) {
         console.error("Error fetching playlists:", error);
       }
+      setIsLoading(false); // Finaliza o loading
     }
 
     fetchPlaylists();
@@ -69,36 +72,37 @@ const openModal = () => {
         <div className="container mx-auto px-6 py-8">
           <div className="grid gap-8">
           <div className="grid gap-4">
-  <h2 className="text-2xl font-bold">Playlists</h2>
-  {playlists.length > 0 ? (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {playlists.map((playlist) => (
-        <div key={playlist.Id} className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
-          <Link href="#" className="absolute inset-0 z-10" prefetch={false}>
-            <span className="sr-only">View</span>
-          </Link>
-          <img
-            src={playlist.Image || "/placeholder.svg"}
-            alt={playlist.PlaylistName}
-            width={300}
-            height={300}
-            className="object-cover w-full h-40"
-          />
-          <div className="bg-white p-4 dark:bg-gray-900">
-            <h3 className="font-bold text-lg">{playlist.PlaylistName}</h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400">{playlist.description}</p>
-          </div>
+          <h2 className="text-2xl font-bold">Playlists</h2>
+          {isLoading && <LoadingBolinha/>}
+      {playlists && playlists.length > 0 ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {playlists.map((playlist) => (
+            <div key={playlist.Id} className="relative group overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-transform duration-300 ease-in-out hover:-translate-y-2">
+              <Link href="#" className="absolute inset-0 z-10" prefetch={false}>
+                <span className="sr-only">View</span>
+              </Link>
+              <img
+                src={playlist.Image || "/placeholder.svg"}
+                alt={playlist.PlaylistName}
+                width={300}
+                height={300}
+                className="object-cover w-full h-40"
+              />
+              <div className="bg-white p-4 dark:bg-gray-900">
+                <h3 className="font-bold text-lg">{playlist.PlaylistName}</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">{playlist.description}</p>
+              </div>
+            </div>
+          ))}
         </div>
-      ))}
-    </div>
-  ) : (
-    <div className="text-center p-4">
-      <p>Nenhuma playlist encontrada para o usuário.</p>
-      <button
-        onClick={openModal} // Esta função precisa ser definida para abrir o modal do formulário
-        className="text-blue-500 hover:underline focus:outline-none focus:ring focus:ring-blue-300"
-      >
-        Crie uma playlist para exibir aqui
+      ) : (
+        <div className="text-center p-4">
+          <p>Nenhuma playlist encontrada para o usuário.</p>
+          <button
+            onClick={openModal} // Assegure-se que 'openModal' está definido
+            className="text-blue-500 hover:underline focus:outline-none focus:ring focus:ring-blue-300"
+          >
+            Crie uma playlist para exibir aqui
       </button>
     </div>
   )}
