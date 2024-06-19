@@ -103,7 +103,7 @@ export default function RegisterForm() {
             <img
                 alt="Image"
                 className="hidden lg:flex h-full w-full object-cover bg-primary"
-                src="/BannerLogin.png"
+                src="/spot.png"
                 style={{
                     aspectRatio: "1280/960",
                     objectFit: "contain",

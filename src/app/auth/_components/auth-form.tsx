@@ -95,7 +95,7 @@ export default function AuthForm() {
             <img
                 alt="Image"
                 className="hidden lg:flex h-full w-full object-cover bg-primary"
-                src="/BannerLogin.png"
+                src="/spot.png"
                 style={{
                     aspectRatio: "1920/1080",
                     objectFit: "contain",
