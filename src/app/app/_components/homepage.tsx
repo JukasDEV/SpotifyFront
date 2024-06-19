@@ -8,6 +8,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
+import { LoadingBolinha } from "@/components/app/loading-bolinha";
+
 
 export default function Component() {
   const [playlists, setPlaylists] = useState<any[]>([]);
