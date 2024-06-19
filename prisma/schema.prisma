@@ -16,7 +16,6 @@ model Albums {
   CreatedAt   DateTime? @default(now(), map: "DF__Albums__CreatedA__6A30C649") @db.DateTime
   Artists     Artists?  @relation(fields: [ArtistId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Albums__ArtistId__6B24EA82")
   Bands       Bands?    @relation(fields: [BandId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Albums__BandId__6C190EBB")
-  Songs       Songs[]
 }
 
 model Artists {
@@ -25,7 +24,6 @@ model Artists {
   Bio        String?   @db.NVarChar(Max)
   CreatedAt  DateTime? @default(now(), map: "DF__Artists__Created__60A75C0F") @db.DateTime
   Albums     Albums[]
-  Songs      Songs[]
 }
 
 model Bands {
@@ -34,7 +32,6 @@ model Bands {
   Bio       String?   @db.NVarChar(Max)
   CreatedAt DateTime? @default(now(), map: "DF__Bands__CreatedAt__6383C8BA") @db.DateTime
   Albums    Albums[]
-  Songs     Songs[]
 }
 
 model Playlists {
@@ -47,16 +44,14 @@ model Playlists {
 }
 
 model Songs {
-  Id        Int       @id(map: "PK__Songs__3214EC0764AEB516") @default(autoincrement())
-  SongName  String    @db.NVarChar(100)
-  Duration  Int
-  AlbumId   Int?
-  ArtistId  Int?
-  BandId    Int?
-  CreatedAt DateTime? @default(now(), map: "DF__Songs__CreatedAt__7B5B524B") @db.DateTime
-  Albums    Albums?   @relation(fields: [AlbumId], references: [AlbumId], onDelete: NoAction, onUpdate: NoAction, map: "FK__Songs__AlbumId__7C4F7684")
-  Artists   Artists?  @relation(fields: [ArtistId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Songs__ArtistId__7D439ABD")
-  Bands     Bands?    @relation(fields: [BandId], references: [Id], onDelete: NoAction, onUpdate: NoAction, map: "FK__Songs__BandId__7E37BEF6")
+  Id         Int       @id(map: "PK__Songs__3214EC0764AEB516") @default(autoincrement())
+  SongName   String    @db.NVarChar(100)
+  Duration   Int
+  CreatedAt  DateTime? @default(now(), map: "DF__Songs__CreatedAt__7B5B524B") @db.DateTime
+  BandName   String?   @db.VarChar(500)
+  Artistname String?   @db.VarChar(500)
+  Albumname  String?   @db.VarChar(500)
+  Imagem     String?   @db.VarChar(500)
 }
 
 model Users {
@@ -74,4 +69,11 @@ model Plans {
   name       String    @db.VarChar(255)
   created_at DateTime? @default(now(), map: "DF__Plans__created_a__03F0984C") @db.DateTime
   Users      Users[]
+}
+
+model alienigena {
+  id         Int     @id(map: "PK__alienige__3213E83FA81A6068") @default(autoincrement())
+  imagem     String? @db.VarChar(500)
+  nome_alien String? @db.VarChar(255)
+  ativo      Int?
 }

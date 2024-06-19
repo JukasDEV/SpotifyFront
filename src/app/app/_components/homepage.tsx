@@ -18,6 +18,8 @@ export default function Component() {
 const [playlistName, setPlaylistName] = useState('');
 const [playlistDesc, setPlaylistDesc] = useState('');
 const [isLoading, setIsLoading] = useState(true);
+const [songs, setSongs] = useState<any[] | null >(null);
+
 
 
 // Função para abrir o modal
@@ -38,6 +40,21 @@ const openModal = () => {
     }
 
     fetchPlaylists();
+  }, []);
+
+
+  useEffect(() => {
+    async function fetchSongs() {
+      try {
+        const response = await axios.get(`/api/music/getmusic`);
+        setSongs(response.data);
+      } catch (error) {
+        console.error("Error fetching songs:", error);
+      }
+      setIsLoading(false); // Finaliza o loading
+    }
+
+    fetchSongs();
   }, []);
 
   return (
@@ -109,133 +126,47 @@ const openModal = () => {
 </div>
 
                  
-            <div className="grid gap-4">
-              <h2 className="text-2xl font-bold">Songs</h2>
-              <div className="border rounded-lg overflow-hidden">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[50px]">#</TableHead>
-                      <TableHead>Title</TableHead>
-                      <TableHead className="hidden sm:table-cell">Artist</TableHead>
-                      <TableHead className="hidden md:table-cell">Album</TableHead>
-                      <TableHead className="text-right">Duration</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>1</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <img src="/placeholder.svg" alt="Song 1" width={40} height={40} className="rounded" />
-                          <div>
-                            <div className="font-medium">Starlight</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">Muse</div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">Muse</TableCell>
-                      <TableCell className="hidden md:table-cell">Black Holes and Revelations</TableCell>
-                      <TableCell className="text-right">4:37</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>2</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <img src="/placeholder.svg" alt="Song 2" width={40} height={40} className="rounded" />
-                          <div>
-                            <div className="font-medium">Believer</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">Imagine Dragons</div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">Imagine Dragons</TableCell>
-                      <TableCell className="hidden md:table-cell">Evolve</TableCell>
-                      <TableCell className="text-right">3:53</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>3</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <img src="/placeholder.svg" alt="Song 3" width={40} height={40} className="rounded" />
-                          <div>
-                            <div className="font-medium">Shape of You</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">Ed Sheeran</div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">Ed Sheeran</TableCell>
-                      <TableCell className="hidden md:table-cell">÷</TableCell>
-                      <TableCell className="text-right">3:53</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            </div>
-            <div className="grid gap-4">
-              <h2 className="text-2xl font-bold">Liked Songs</h2>
-              <div className="border rounded-lg overflow-hidden">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-[50px]">#</TableHead>
-                      <TableHead>Title</TableHead>
-                      <TableHead className="hidden sm:table-cell">Artist</TableHead>
-                      <TableHead className="hidden md:table-cell">Album</TableHead>
-                      <TableHead className="text-right">Duration</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    <TableRow>
-                      <TableCell>1</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <img src="/placeholder.svg" alt="Song 1" width={40} height={40} className="rounded" />
-                          <div>
-                            <div className="font-medium">Bohemian Rhapsody</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">Queen</div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">Queen</TableCell>
-                      <TableCell className="hidden md:table-cell">A Night at the Opera</TableCell>
-                      <TableCell className="text-right">5:55</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>2</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <img src="/placeholder.svg" alt="Song 2" width={40} height={40} className="rounded" />
-                          <div>
-                            <div className="font-medium">Stairway to Heaven</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">Led Zeppelin</div>
-                          </div>
-                        </div>
-
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">Led Zeppelin</TableCell>
-                      <TableCell className="hidden md:table-cell">Led Zeppelin IV</TableCell>
-                      <TableCell className="text-right">8:02</TableCell>
-                    </TableRow>
-                    <TableRow>
-                      <TableCell>3</TableCell>
-                      <TableCell>
-                        <div className="flex items-center gap-2">
-                          <img src="/placeholder.svg" alt="Song 3" width={40} height={40} className="rounded" />
-                          <div>
-                            <div className="font-medium">Smells Like Teen Spirit</div>
-                            <div className="text-sm text-gray-500 dark:text-gray-400">Nirvana</div>
-                          </div>
-                        </div>
-                      </TableCell>
-                      <TableCell className="hidden sm:table-cell">Nirvana</TableCell>
-                      <TableCell className="hidden md:table-cell">Nevermind</TableCell>
-                      <TableCell className="text-right">5:01</TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </div>
-            </div>
+<div className="grid gap-4">
+      <h2 className="text-2xl font-bold">Songs</h2>
+      <div className="border rounded-lg overflow-hidden">
+        {isLoading ? (
+          <p>Carregando músicas...</p>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-[50px]">#</TableHead>
+                <TableHead>Title</TableHead>
+                <TableHead className="hidden sm:table-cell">Artist</TableHead>
+                <TableHead className="hidden md:table-cell">Album</TableHead>
+                <TableHead className="text-right">Duration</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {songs?.map((song, index) => (
+                <TableRow key={song.Id}>
+                  <TableCell>{index + 1}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <img src={song.Imagem} alt={song.SongName} width={40} height={40} className="rounded" />
+                      <div>
+                        <div className="font-medium">{song.SongName}</div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">{song.Artistname}</div>
+                      </div>
+                    </div>
+                  </TableCell>
+                  <TableCell className="hidden sm:table-cell">{song.Artistname}</TableCell>
+                  <TableCell className="hidden md:table-cell">{song.Albumname}</TableCell>
+                  <TableCell className="text-right">{Math.floor(song.Duration / 60)}:{String(song.Duration % 60).padStart(2, '0')}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </div>
+    </div>
+           
+                     
            
           </div>
         </div>
