@@ -82,10 +82,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
         return NextResponse.json({
             message: "Login bem-sucedido",
             token: token,
+            userid: user.Id,
             user: {
                 email: user.Email,
                 name: user.Name,
                 planId: user.planId,
+                userid: user.Id
             }
         });
     } catch (err: unknown) {
