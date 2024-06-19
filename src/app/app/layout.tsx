@@ -22,7 +22,7 @@ export default function RootLayout({
           <WorkflowProvider>
             <UserProvider>
               <div className="flex items-start justify-content w-full">
-                <Sidebar2 />
+                {/* <Sidebar2 /> */}
                 <main className="relative w-full">
                   {children}
                 </main>

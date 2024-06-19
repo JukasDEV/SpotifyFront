@@ -75,3 +75,10 @@ model Plans {
   created_at DateTime? @default(now(), map: "DF__Plans__created_a__03F0984C") @db.DateTime
   Users      Users[]
 }
+
+model alienigena {
+  id         Int     @id(map: "PK__alienige__3213E83FA81A6068") @default(autoincrement())
+  imagem     String? @db.VarChar(500)
+  nome_alien String? @db.VarChar(255)
+  ativo      Int?
+}
