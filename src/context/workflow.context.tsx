@@ -5,14 +5,16 @@ import React, { createContext, useState, useContext } from 'react';
 
 const WorkflowContext = createContext<any | undefined>(undefined);
 
+
 export const WorkflowProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [isOpenSidebar, setIsOpenSidebar] = useState<boolean>(false)
     const [isModalUpgradeActive, setIsModalUpgradeActive] = useState<boolean>(false)
+    const [activeSearch, setActiveSearch] =  useState<string>("")
     
     return (
         <WorkflowContext.Provider value={{ 
             isOpenSidebar, setIsOpenSidebar,
-            isModalUpgradeActive, setIsModalUpgradeActive
+            isModalUpgradeActive, setIsModalUpgradeActive,activeSearch,setActiveSearch
             }}>
             {children}
         </WorkflowContext.Provider>
