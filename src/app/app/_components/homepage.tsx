@@ -10,11 +10,13 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table";
 import { LoadingBolinha } from "@/components/app/loading-bolinha";
 import BarraPesquisar from '../_components/barra'
+import { useWorkflow } from "@/context/workflow.context";
 
 
 
 export default function Component() {
   const [playlists, setPlaylists] = useState<any[] | null >(null);
+  const {activeSearch} = useWorkflow()
 
   const [open, setOpen] = useState(false);
 const [playlistName, setPlaylistName] = useState('');
@@ -73,7 +75,7 @@ const openModal = () => {
           </Button>
         </div>
         <div className="flex items-center gap-4">
-          <div className="relative">
+          
             {/* <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-500 dark:text-gray-400" /> */}
             {/* <Input
               type="search"
@@ -81,14 +83,14 @@ const openModal = () => {
               className="h-8 w-[200px] rounded-full bg-gray-100 pl-10 text-sm focus:bg-white dark:bg-gray-800 dark:text-white dark:focus:bg-gray-700"
             /> */}
             <BarraPesquisar/>
-          </div>
+          
           <Avatar className="h-8 w-8 border-2 border-gray-200 dark:border-gray-800">
             <AvatarImage src="/placeholder-user.jpg" />
             <AvatarFallback>AC</AvatarFallback>
           </Avatar>
         </div>
       </header>
-      <main className="flex-1 overflow-auto">
+      <main className="flex-1 overflow-auto z-30">
         <div className="container mx-auto px-6 py-8">
           <div className="grid gap-8">
           <div className="grid gap-4">
@@ -146,7 +148,9 @@ const openModal = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {songs?.map((song, index) => (
+              {songs && songs.filter((music: any) => activeSearch.length >= 2 ? music.SongName.toLowerCase().includes(activeSearch.toLowerCase()) : true).map((song, index) => {
+
+                return (
                 <TableRow key={song.Id}>
                   <TableCell>{index + 1}</TableCell>
                   <TableCell>
@@ -162,7 +166,8 @@ const openModal = () => {
                   <TableCell className="hidden md:table-cell">{song.Albumname}</TableCell>
                   <TableCell className="text-right">{Math.floor(song.Duration / 60)}:{String(song.Duration % 60).padStart(2, '0')}</TableCell>
                 </TableRow>
-              ))}
+                )
+            })}
             </TableBody>
           </Table>
         )}

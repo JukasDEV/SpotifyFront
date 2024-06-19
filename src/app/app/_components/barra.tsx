@@ -17,7 +17,7 @@ export default function BarraPesquisar({ className }: { className?: string }) {
             const response = await axios.post('/api/music/musicsearch', {
                 search: activeSearch
             })
-            console.log(response.data)
+            console.log(response.data.searchResults)
             setSearchList(response.data.searchResults)
             setShowDropDown(true)
             return response.data
@@ -27,8 +27,8 @@ export default function BarraPesquisar({ className }: { className?: string }) {
     }
 
     useEffect(() => {
-        console.log(activeSearch)
-        if (activeSearch >= 3 && !showDropDown) {
+        if (activeSearch.length >= 2) {
+            console.log(activeSearch)
             fetchAzureSearch()
         }  else {
             setShowDropDown(false)
@@ -74,19 +74,21 @@ export default function BarraPesquisar({ className }: { className?: string }) {
                 <SearchIcon className="text-[16px] font-bold" />
             </Button>
             {showDropDown && searchList.length > 0 && 
-                <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-gray-300 rounded-md shadow-lg z-10">
-                    {searchList.length > 1 && searchList.map((item: any, index: number) => (
-                        <div
+                <div className="z-60 absolute left-0 right-0 top-full mt-2 bg-primary border border-gray-300 rounded-md shadow-lg py-2">
+                    {searchList.length > 0 && searchList.map((item: any, index: number) => {
+                        console.log(item, " => item")
+                        return (
+                            <div
                             key={index}
-                            className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                            className="text-black font-semibold h-[16px] px-4 py-2 flex items-center hover:text-white cursor-pointer"
                             onClick={() => {
                                 handleSuggestionClick(item.document.SongName)
                             }}
                         >
-                            {/* {item.document.SongName} */}
-                            theobonitao
+                            {item.document.SongName}
                         </div>
-                    ))}
+                        )
+                    } ) }
                 </div>
             }
         </div>
