@@ -108,6 +108,7 @@ export default function RegisterForm() {
                     aspectRatio: "1280/960",
                     objectFit: "contain",
                 }}
+                
             />
         </div>
     )
